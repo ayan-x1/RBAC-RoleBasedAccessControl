@@ -1,6 +1,9 @@
-import User from "../models/user.js";
+//import User from "../models/user.js";
+//import Role from "../models/role.js";
 import { hashPassword, comparePassword } from "../utils/bcrypt.js";
 import { generateToken } from "../utils/jwt.js";
+import db from "../models/index.js";
+const { User, Role } = db;
 
 const registerUser = async ({ name, email, password }) => {
   // Check if user already exists
@@ -11,10 +14,26 @@ const registerUser = async ({ name, email, password }) => {
 
   const hashedPassword = await hashPassword(password);
 
+  const employeeRole = await Role.findOne({
+    where: { name: "EMPLOYEE" }
+  });
+
+  /*const userCount = await User.count();
+
+  let role;
+  if (userCount === 0) {
+    role = await Role.findOne({ where: { name: "ADMIN" } });
+  } else {
+    role = await Role.findOne({ where: { name: "EMPLOYEE" } });
+  }*/
+
+
+
   const user = await User.create({
     name,
     email,
     password: hashedPassword,
+    roleId: employeeRole.id
   });
 
   return user;
@@ -31,9 +50,15 @@ const loginUser = async ({ email, password }) => {
     throw new Error("Invalid email or password");
   }
 
+  if (!user.roleId) {
+  throw new Error("User has no role assigned");
+}
+
+
   const token = generateToken({
     id: user.id,
     email: user.email,
+    roleId: user.roleId
   });
   return {
     token,
