@@ -4,21 +4,25 @@ export default function Home() {
   return (
     <div className="page-center">
       <main className="card">
-        <h1 className="title">Welcome</h1>
+        <h1 className="title">RBAC System</h1>
 
         <p className="subtitle">
-          Create an account to get started or sign in if you already have one.
+          Role-Based Access Control demo using Next.js
         </p>
 
         <div className="mt-6 flex flex-col gap-4">
           <Link href="/auth/register" className="btn btn-primary">
-            Register
+            Create Account
           </Link>
 
           <Link href="/auth/login" className="btn btn-secondary">
-            Login
+            Sign In
           </Link>
         </div>
+
+        <p className="mt-6 text-center text-xs text-(--muted)">
+          Admin access is restricted
+        </p>
       </main>
     </div>
   );

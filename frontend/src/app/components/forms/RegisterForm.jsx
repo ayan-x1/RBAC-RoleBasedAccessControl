@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/lib/validations/auth.schema";
 
 export default function RegisterForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -14,7 +17,26 @@ export default function RegisterForm() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Form Data:", data);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Registration failed");
+      }
+
+      // Registration successful → redirect to login
+      router.push("/auth/login");
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (

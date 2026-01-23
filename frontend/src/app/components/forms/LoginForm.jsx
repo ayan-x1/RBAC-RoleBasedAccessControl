@@ -1,10 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/lib/validations/auth.schema";
 
+const ADMIN_EMAIL = "admin@gmail.com";
+const ADMIN_PASSWORD = "Admin@123";
+
 export default function LoginForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -14,11 +20,42 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Login Data:", data);
-    // TODO: call login API
+    /* ===============================
+       STATIC ADMIN LOGIN (NO API)
+       =============================== */
+    if (
+      data.email === ADMIN_EMAIL &&
+      data.password === ADMIN_PASSWORD
+    ) {
+      router.push("/dashboard/admin");
+      return;
+    }
+
+    /* ===============================
+       NORMAL USER LOGIN (API)
+       =============================== */
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Login failed");
+      }
+
+      router.push("/dashboard/user");
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
-  return (  
+  return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div className="form-field">
         <label className="label">Email</label>
