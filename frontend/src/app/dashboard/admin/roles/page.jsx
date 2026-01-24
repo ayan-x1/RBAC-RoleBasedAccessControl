@@ -100,7 +100,7 @@ export default function RolesPage() {
         </div>
         <button
           onClick={() => (isFormOpen ? closeForm() : openCreate())}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-fg)] shadow-sm transition hover:bg-[var(--primary-hover)]"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-(--primary) px-4 py-2 text-sm font-medium text-(--primary-fg) shadow-sm transition hover:bg-(--primary-hover)"
         >
           <span className="text-lg leading-none">{isFormOpen ? "-" : "+"}</span>
           <span>{isFormOpen ? "Close form" : "Create role"}</span>
@@ -213,7 +213,7 @@ export default function RolesPage() {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="input min-h-[80px] resize-none"
+                  className="input min-h-20 resize-none"
                   placeholder="Short description of what this role can do"
                   required
                 />
@@ -223,7 +223,7 @@ export default function RolesPage() {
                 <button
                   type="button"
                   onClick={closeForm}
-                  className="inline-flex items-center rounded-[var(--radius)] border border-(--border) px-4 py-2 text-sm font-medium text-(--fg) hover:bg-gray-50"
+                  className="inline-flex items-center rounded-(--radius) border border-(--border) px-4 py-2 text-sm font-medium text-(--fg) hover:bg-gray-50"
                 >
                   Cancel
                 </button>
