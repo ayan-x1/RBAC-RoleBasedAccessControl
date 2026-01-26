@@ -1,6 +1,6 @@
 export default {
   username: "postgres",
-  password: "root",
+  password: "ayan20_2005",
   database: "rbac_db",
   host: "localhost",
   dialect: "postgres",

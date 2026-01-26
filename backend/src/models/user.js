@@ -141,10 +141,103 @@ User.associate = (models) => {
   return User;
 };*/
 
+// // changes made by - Ayan
+
+
+// export default (sequelize, DataTypes) => {
+//   const User = sequelize.define(
+//     "User",
+//     {
+//       id: {
+//         type: DataTypes.INTEGER,
+//         autoIncrement: true,
+//         primaryKey: true
+//       },
+
+//       name: {
+//         type: DataTypes.STRING,
+//         allowNull: false
+//       },
+
+//       email: {
+//         type: DataTypes.STRING,
+//         allowNull: false,
+//         unique: true
+//       },
+
+//       password: {
+//         type: DataTypes.STRING,
+//         allowNull: false
+//       },
+
+//       roleId: {
+//         type: DataTypes.INTEGER,
+//         allowNull: false,
+//         field: "roleid"   // ✅ MAPS TO DB COLUMN
+//       }
+//     },
+//     {
+//       tableName: "users",
+//       freezeTableName: true,
+//       timestamps: true
+//     }
+//   );
+
+//   User.associate = (models) => {
+//     User.belongsTo(models.Role, {
+//       foreignKey: "roleId"
+//     });
+//   };
+
+//   return User;
+// };
+
+// import { DataTypes } from "sequelize";
+// import { sequelize } from "../config/database.js";
+
+// const User = sequelize.define(
+//   "users",
+//   {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       autoIncrement: true,
+//       primaryKey: true,
+//     },
+
+//     name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+
+//     email: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       unique: true,
+//     },
+
+//     password: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+
+//     roleId: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       field: "roleid",
+//     },
+//   },
+//   {
+//     freezeTableName: true,
+//     timestamps: true,
+//   }
+// );
+
+// export default User;
+
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    "users",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -171,20 +264,17 @@ export default (sequelize, DataTypes) => {
       roleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: "roleid"   // ✅ MAPS TO DB COLUMN
+        field: "roleid"
       }
     },
     {
-      tableName: "users",
       freezeTableName: true,
       timestamps: true
     }
   );
 
   User.associate = (models) => {
-    User.belongsTo(models.Role, {
-      foreignKey: "roleId"
-    });
+    User.belongsTo(models.Role, { foreignKey: "roleId" });
   };
 
   return User;
